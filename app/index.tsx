@@ -1,56 +1,63 @@
-import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-export default function Index() {
-  const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState<string[]>([]);
-
-  const addTask = () => {
-    if (task.trim() === '') return;
-    setTasks(prev => [...prev, task]);
-    setTask('');
-    Haptics.selectionAsync(); // вибрация при добавяне
-  };
-
-  const removeTask = (index: number) => {
-    setTasks(prev => prev.filter((_, i) => i !== index));
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); // вибрация при триене
-  };
-
+export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>📝 My To-Do List</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Horror Movies</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Добави нова задача"
-          value={task}
-          onChangeText={setTask}
-        />
-        <Button title="Добави" onPress={addTask} />
+      <View style={styles.movieItem}>
+        <Text style={styles.movieText}>The Conjuring (2013) - James Wan</Text>
+        <Text style={styles.movieInfo}>Duration: 112 min | Country: USA | Main Characters: Ed & Lorraine Warren</Text>
       </View>
 
-      <FlatList
-        style={{ width: '100%' }}
-        data={tasks}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity onPress={() => removeTask(index)}>
-            <Text style={styles.task}>{item}</Text>
-          </TouchableOpacity>
-        )}
-        ListEmptyComponent={<Text style={{ color: '#888', marginTop: 20 }}>Няма задачи</Text>}
-      />
-    </View>
+      <View style={styles.movieItem}>
+        <Text style={styles.movieText}>Hereditary (2018) - Ari Aster</Text>
+        <Text style={styles.movieInfo}>Duration: 127 min | Country: USA | Main Characters: Annie Graham</Text>
+      </View>
+
+      <View style={styles.movieItem}>
+        <Text style={styles.movieText}>It (2017) - Andy Muschietti</Text>
+        <Text style={styles.movieInfo}>Duration: 135 min | Country: USA | Main Characters: Bill, Pennywise</Text>
+      </View>
+
+      <View style={styles.movieItem}>
+        <Text style={styles.movieText}>Insidious (2010) - James Wan</Text>
+        <Text style={styles.movieInfo}>Duration: 103 min | Country: USA | Main Characters: Josh Lambert</Text>
+      </View>
+
+      <View style={styles.movieItem}>
+        <Text style={styles.movieText}>The Ring (2002) - Gore Verbinski</Text>
+        <Text style={styles.movieInfo}>Duration: 115 min | Country: USA | Main Characters: Rachel Keller</Text>
+      </View>
+
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', paddingTop: 60, backgroundColor: '#111' },
-  title: { fontSize: 28, color: 'orange', marginBottom: 20 },
-  inputContainer: { flexDirection: 'row', marginBottom: 20, width: '90%', justifyContent: 'space-between' },
-  input: { borderWidth: 1, borderColor: '#888', flex: 1, marginRight: 10, paddingHorizontal: 10, color: '#fff' },
-  task: { padding: 12, fontSize: 18, color: '#fff', borderBottomWidth: 1, borderBottomColor: '#333' },
+  container: {
+    flex: 1,
+    backgroundColor: '#000', // Черен фон
+    padding: 20,
+  },
+  title: {
+    color: 'orange',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  movieItem: {
+    marginBottom: 20,
+  },
+  movieText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  movieInfo: {
+    color: 'lightgray',
+    fontSize: 16,
+    marginTop: 5,
+  },
 });
